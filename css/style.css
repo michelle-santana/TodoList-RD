@@ -1,0 +1,33 @@
+header{
+    background-color: pink;
+    color: white;
+    
+}
+section{
+    text-align: center;
+}
+.card-tarefa{
+ display: flex;
+ justify-content: space-between;
+ border: 1px solid;
+ border-radius: 20px;
+ padding: 30px 20px;
+ box-shadow: 3px 3px 3px 2px;
+
+ 
+}
+
+footer{
+    position: fixed;
+    width: 100vw;
+    display: flex;
+    padding: 20px;
+    justify-content:center;
+    background-color: pink;
+    bottom:0px
+}
+
+#tarefa-digitada{
+    width: 45%;
+    margin-right: 20px;
+}
