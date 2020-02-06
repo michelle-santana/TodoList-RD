@@ -1,12 +1,12 @@
 header{
-    background-color: pink;
+    background-color: pink; /* ajustes do cabeçalho */
     color: white;
     
 }
 section{
     text-align: center;
 }
-.card-tarefa{
+.card-tarefa{                  /* ajustes da minha caixa de tarefa */
  display: flex;
  justify-content: space-between;
  border: 1px solid;
@@ -17,7 +17,7 @@ section{
  
 }
 
-footer{
+footer{                      /* ajustes do rodapé */
     position: fixed;
     width: 100vw;
     display: flex;
@@ -27,7 +27,7 @@ footer{
     bottom:0px
 }
 
-#tarefa-digitada{
+#tarefa-digitada{     /* ajustes de botão */
     width: 45%;
     margin-right: 20px;
 }
