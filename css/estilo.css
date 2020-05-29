@@ -1,0 +1,44 @@
+.rodape {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+}
+
+.clara {
+    color: white;
+}
+
+.header {
+    color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.titulo {
+    position: absolute;
+    left: 10px;
+}
+
+.valor {
+    display: flex;
+    justify-content: center;
+}
+
+#tarefa-digitada {
+    width: 400px;
+    margin-right: 30px;
+}
+
+.card-tarefa {
+    padding: 30px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 3px solid;
+}

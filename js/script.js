@@ -1,91 +1,66 @@
-let btnAddTarefa = document.getElementById("imagem") //função adcionar barra de tarefa//
-let tarefas = document.querySelector("#tarefas")
-let inputTarefa = document.querySelector("#tarefa-digitada")
-let listaTarefas = localStorage.getItem("listaTarefas") ? JSON.parse(localStorage.getItem("listaTarefas")) : []
+let btnAddTarefa = document.getElementById("adicionar-tarefa");
+let inputTarefa = document.getElementById("tarefa-digitada");
+let divTarefas = document.getElementById("tarefas");
+let listaTarefas = localStorage.getItem('tarefas')? JSON.parse(localStorage.getItem('tarefas')) : [];
 
-const salvarLocalStorage = tarefas => {
-    let tarefasEmJson = JSON.stringify(tarefas)
-    localStorage.setItem("listaTarefas", tarefasEmJson)
-    console.log("tarefa salva com sucesso!");
-}
-
-const mostrarNaTela = arrayTarefas => {
-    arrayTarefas.forEach(textoTarefa => {
-        let tarefaNova = `<div class="col-lg-4">
-        <div class="card-tarefa">
-            <div class="texto Tarefa">
-                ${textoTarefa} 
-            </div>
-            <div class="botão-tarefa">
-                <img src="../imagens/botão check.png" alt="Botão check" title="Botão check" width="50px">
-            </div>
-        </div>
-    </div>`
-
-        tarefas.insertAdjacentHTML("beforeend", tarefaNova)
-
-
-
-        let objTarefaNova = tarefas.lastElementChild
-        let btnCheckTarefaNova = objTarefaNova.lastElementChild.lastElementChild
-        btnCheckTarefaNova.onclick = (event) => {
-
-            tarefas.removeChild(event.target.parentNode.parentNode.parentNode)
-            listaTarefas = listaTarefas.filter(valor => valor != textoTarefa)
-
-            salvarLocalStorage(listaTarefas)
-
-        }
-
-    })
-
-}
-
-mostrarNaTela(listaTarefas)
-
-const criarTarefaComEnter = event => {
-
-    if (event.keyCode == 13 || event.type == "click") {
-
-        let valorDigitado = inputTarefa.value //quando usuário insere um valor//
-        if (valorDigitado == "") {
-            alert("Você deve digitar uma tarefa primeiro.") //Essa função dispara um alerta na tela quando o botão é clicado.//
-            return
-        }
-
-
-        inputTarefa.value = ""
-        let tarefaNova = `<div class="col-lg-4">
+const criarHtml = (valor) => {
+    let html =  `<div class="col-md-4 divTarefas">
     <div class="card-tarefa">
-        <div class="texto Tarefa">
-            ${valorDigitado} 
-        </div>
-        <div class="botão-tarefa">
-            <img src="../imagens/botão check.png" alt="Botão check" title="Botão check" width="50px">
-        </div>
+    <div class="text-tarefa">
+    ${valor}
     </div>
-</div>`
+    <div class="botao-tarefa">
+    <img src="images/check.png" alt="Botão para finalizar tarefa" title="Botão para finalizar tarefa" width="32">
+    </div>
+    </div>
+    </div>`
+    
+    divTarefas.insertAdjacentHTML('beforeend', html);
+    let objTarefaNova = divTarefas.lastElementChild;
+    objTarefaNova.lastElementChild.lastElementChild.onclick = () => removerTarefa(objTarefaNova, valor);
+}
 
-        listaTarefas.push(valorDigitado); //capta o valor digitado na tarefa//
-        salvarLocalStorage(listaTarefas)
+const removerTarefa = (tarefa, textoTarefa) => {
+    listaTarefas = listaTarefas.filter(valor => valor != textoTarefa)
+    tarefa.remove();
+    salvarTarefas(listaTarefas);
+}
 
-
-        tarefas.insertAdjacentHTML("beforeend", tarefaNova) //funcionalidade clicar no check//
-
-        let objTarefaNova = tarefas.lastElementChild
-        let btnCheckTarefaNova = objTarefaNova.lastElementChild.lastElementChild
-        objTarefaNova.onclick = (event) => {
-            tarefas.removeChild(event.target.parentNode.parentNode.parentNode)
-        }
-
-
+const adicionarTarefa = () => {
+    let textoTarefa = inputTarefa.value;
+    if (textoTarefa == "") {
+        alert("INSIRA ALGUM DADO");
+        return;
     }
 
+    listaTarefas.push(textoTarefa);
+
+    criarHtml(textoTarefa);
+    inputTarefa.value = "";
+    salvarTarefas(listaTarefas);
 }
 
-inputTarefa.addEventListener("keypress", criarTarefaComEnter)
-btnAddTarefa.addEventListener("click", criarTarefaComEnter)
+const salvarTarefas = (tarefas) => {
+    let tarefasJson = JSON.stringify(tarefas);
+    localStorage.setItem("tarefas", tarefasJson);
+}
 
+const mostrarNaTela = tarefas => {
+    if(tarefas) {
+        tarefas.forEach(textoTarefa => {
+            criarHtml(textoTarefa);
+        });
+    }
+}
 
+btnAddTarefa.onclick = () => {
+    adicionarTarefa();
+}
 
+inputTarefa.onkeypress = (e) => {
+    if (e.which == 13) {
+        adicionarTarefa();
+    }
+}
 
+mostrarNaTela(listaTarefas);
